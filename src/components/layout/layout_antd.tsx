@@ -1,16 +1,25 @@
-import { Layout, Menu } from 'antd';
-
+import { Layout, List, Menu, Row } from 'antd';
+import { observer } from 'mobx-react-lite'
 import './layout_style.css';
 import { My_Form_Show } from '../form/my_form';
 import { My_Card_show } from '../show_cards';
 import { cardInfo, smartphoneDict } from '../storage_data_local';
 import { Form_Smartphone } from '../form/form_smartphone';
-import { Show_Smartphone_row } from '../show_Smartphone_row';
+import { Edit_form_show, Show_Smartphone_row } from '../show_Smartphone_row';
+import { useEffect } from 'react';
+import { useRootStore } from '../..';
+import { IContentModel } from '../interface/Interface';
 
 const { Header, Content } = Layout;
 
-export const My_Layout_Main = () => {
 
+
+export const My_Layout_Main = observer(() => {
+    const { contents, contents_notes } = useRootStore()
+
+    useEffect(() => {
+        console.log('>>contents_notes', contents_notes)
+    }, [ contents_notes ])
     return(
         <Layout className="layout">
                 <div>
@@ -59,23 +68,45 @@ export const My_Layout_Main = () => {
 
                             <tbody> 
                             {
-                                smartphoneDict.map((esl)=> {
-                                    return(
-                                    //{
-                                        // console.log("--->> ",esl)
-                                        <Show_Smartphone_row smartphone_charact={esl} smartphone_charact_base={esl} />
-                                    //}
+                                // smartphoneDict.map((esl)=> {
+                                //     return(
+                                //     //{
+                                //         // console.log("--->> ",esl)
+                                //         //<Show_Smartphone_row smartphone_charact={esl} smartphone_charact_base={esl} />
+                                //     //}
+                                //     )
+                                // })
+
+                                contents_notes.map((content: IContentModel) => {
+                                    return (
+                                        <Show_Smartphone_row smartphone_charact={content} smartphone_charact_base={content} />
+                                        
                                     )
                                 })
+                                
                             }
                             </tbody>
 
                         </table>    
                     </div>
+
+                    <div className='site-layout-content'>
+                    <Row gutter={ 16 }>
+                        { contents.map((content: IContentModel) => {
+
+                            return (
+                                <Edit_form_show key={ content.id } content={ content } />
+                            )
+                        }) }
+                    </Row>
+
+                </div>
+
+
                 </Content>
             </main>
 
            
       </Layout>
     )
-}
+})
