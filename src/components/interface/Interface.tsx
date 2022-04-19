@@ -1,3 +1,6 @@
+import { Instance } from 'mobx-state-tree'
+import { ContentModel } from '../store/Model_Content';
+import RootStore from '../store/Root_store';
 
 export interface Smartphone{
     smartphone_charact:{
@@ -14,4 +17,10 @@ export interface Smartphone_Base extends Smartphone {
         memorie_interna : string;
         cpu : string;
     }
+}
+
+export interface IRootStore extends Instance<typeof RootStore> {
+}
+
+export interface IContentModel extends Instance<typeof ContentModel> {
 }
