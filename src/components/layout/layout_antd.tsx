@@ -3,7 +3,9 @@ import { Layout, Menu } from 'antd';
 import './layout_style.css';
 import { My_Form_Show } from '../form/my_form';
 import { My_Card_show } from '../show_cards';
-import { cardInfo } from '../storage_data_local';
+import { cardInfo, smartphoneDict } from '../storage_data_local';
+import { Form_Smartphone } from '../form/form_smartphone';
+import { Show_Smartphone_row } from '../show_Smartphone_row';
 
 const { Header, Content } = Layout;
 
@@ -25,8 +27,10 @@ export const My_Layout_Main = () => {
 
             <main>
                 <Content style={{ padding: '0 50px' }}>
-                <My_Form_Show />
-                   
+                   <div className="formGrid" >
+                       <My_Form_Show /> 
+                       <Form_Smartphone/>  
+                   </div>
                     
                     <div className="site-layout-content grid-3">                   
                         {
@@ -38,6 +42,36 @@ export const My_Layout_Main = () => {
                             })
                         }
                     </div> 
+                    <div>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                <th>MODEL</th>
+                                <th>TIP_BATERIE</th>
+                                <th>CAPACITATEA_BATERIEI</th>
+                                <th>GREUTATE</th>
+                                <th>RAM</th>
+                                <th>MEMORIE_INTERNA</th>
+                                <th>CPU</th>
+                                </tr>
+                            </thead>
+
+                            <tbody> 
+                            {
+                                smartphoneDict.map((esl)=> {
+                                    return(
+                                    //{
+                                        // console.log("--->> ",esl)
+                                        <Show_Smartphone_row smartphone_charact={esl} smartphone_charact_base={esl} />
+                                    //}
+                                    )
+                                })
+                            }
+                            </tbody>
+
+                        </table>    
+                    </div>
                 </Content>
             </main>
 
