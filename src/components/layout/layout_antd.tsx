@@ -9,6 +9,7 @@ import { Edit_form_show, Show_Smartphone_row } from '../show_Smartphone_row';
 import { useEffect } from 'react';
 import { useRootStore } from '../..';
 import { IContentModel } from '../interface/Interface';
+import { My_form_login } from '../form/my_form_login';
 
 const { Header, Content } = Layout;
 
@@ -37,6 +38,7 @@ export const My_Layout_Main = observer(() => {
             <main>
                 <Content style={{ padding: '0 50px' }}>
                    <div className="formGrid" >
+                       <My_form_login/>
                        <My_Form_Show /> 
                        <Form_Smartphone/>  
                    </div>
