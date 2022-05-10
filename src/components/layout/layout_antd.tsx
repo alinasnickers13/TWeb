@@ -9,104 +9,50 @@ import { Edit_form_show, Show_Smartphone_row } from '../show_Smartphone_row';
 import { useEffect } from 'react';
 import { useRootStore } from '../..';
 import { IContentModel } from '../interface/Interface';
+import { My_form_login } from '../form/my_form_login';
+import { Link, Route, Routes } from 'react-router-dom';
+import { Show_Cards_Menu } from '../menu_components/Show_Cards_Menu';
+import { Show_Table_Menu } from '../menu_components/Show_Table_Menu';
 
 const { Header, Content } = Layout;
 
 
 
-export const My_Layout_Main = observer(() => {
-    const { contents, contents_notes } = useRootStore()
+export const My_Layout_Main = () => {
 
-    useEffect(() => {
-        console.log('>>contents_notes', contents_notes)
-    }, [ contents_notes ])
     return(
         <Layout className="layout">
                 <div>
                    <h2> Elaborat de studenta Axenti Alina din grupa CR-191</h2>
                 </div>
             <Header>
-                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
-                    {new Array(4).fill(null).map((_, index) => {
-                    const key = index + 1;
-                    return <Menu.Item key={key}>{`nav ${key}`}</Menu.Item>;
-                    })}
-                </Menu>
+            <Menu theme='dark' mode='horizontal'>
+                <Menu.Item key={1}>
+                    <Link to="/login">Login</Link>
+                </Menu.Item>
+                <Menu.Item key={2}>
+                    <Link to="/myform">My First Form</Link>
+                </Menu.Item>
+                <Menu.Item key={3}>
+                    <Link to="/form_smartphone">Form Smartphone</Link>
+                </Menu.Item>
+                <Menu.Item key={4}>
+                    <Link to="/cards">Show Cards</Link>
+                </Menu.Item>
+                <Menu.Item key={5}>
+                    <Link to="/table_edit">Show Table</Link>
+                </Menu.Item>              
+            </Menu>
             </Header>
 
-            <main>
-                <Content style={{ padding: '0 50px' }}>
-                   <div className="formGrid" >
-                       <My_Form_Show /> 
-                       <Form_Smartphone/>  
-                   </div>
-                    
-                    <div className="site-layout-content grid-3">                   
-                        {
-                            cardInfo.map((el, index) => {
-                                return(
-
-                                    <My_Card_show key={ el.id } title={ el.title } gif_url={el.gif_url} description={ el.description } phoneNumber={ el.phoneNumber } />
-                                )
-                            })
-                        }
-                    </div> 
-                    <div>
-
-                        <table>
-                            <thead>
-                                <tr>
-                                <th>MODEL</th>
-                                <th>TIP_BATERIE</th>
-                                <th>CAPACITATEA_BATERIEI</th>
-                                <th>GREUTATE</th>
-                                <th>RAM</th>
-                                <th>MEMORIE_INTERNA</th>
-                                <th>CPU</th>
-                                </tr>
-                            </thead>
-
-                            <tbody> 
-                            {
-                                // smartphoneDict.map((esl)=> {
-                                //     return(
-                                //     //{
-                                //         // console.log("--->> ",esl)
-                                //         //<Show_Smartphone_row smartphone_charact={esl} smartphone_charact_base={esl} />
-                                //     //}
-                                //     )
-                                // })
-
-                                contents_notes.map((content: IContentModel) => {
-                                    return (
-                                        <Show_Smartphone_row smartphone_charact={content} smartphone_charact_base={content} />
-                                        
-                                    )
-                                })
-                                
-                            }
-                            </tbody>
-
-                        </table>    
-                    </div>
-
-                    <div className='site-layout-content'>
-                    <Row gutter={ 16 }>
-                        { contents.map((content: IContentModel) => {
-
-                            return (
-                                <Edit_form_show key={ content.id } content={ content } />
-                            )
-                        }) }
-                    </Row>
-
-                </div>
-
-
-                </Content>
-            </main>
-
+            <Routes>
+                <Route path='/login' element={ <My_form_login/> } />
+                <Route path='/myform' element={<My_Form_Show /> } />
+                <Route path='/form_smartphone' element={<Form_Smartphone/>} />
+                <Route path='/cards' element={<Show_Cards_Menu/>} />
+                <Route path='/table_edit' element={<Show_Table_Menu/>} />
+            </Routes>
            
       </Layout>
     )
-})
+}
